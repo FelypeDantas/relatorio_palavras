@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Analisador de Texto</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <main>
+        <h1>Analisador de Palavras</h1>
+
+        <section>
+
+            <h2>Carregar texto</h2>
+
+            <input type="file" id="arquivo">
+            <button onclick="lerArquivo()">Carregar</button>
+
+            <textarea id="texto" placeholder="cole seu texto aqui"></textarea>
+
+            <button onclick="analisar()">Analisar</button>
+
+        </section>
+
+        <section>
+
+            <h2>Texto analisado</h2>
+
+            <div id="textoDestacado"></div>
+
+        </section>
+
+        <section>
+
+            <h2>Ranking de palavras</h2>
+
+            <div id="ranking"></div>
+
+        </section>
+
+        <section>
+
+            <h2>Nuvem de palavras</h2>
+
+            <canvas id="nuvem" width="500" height="300"></canvas>
+
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.1.1/wordcloud2.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
