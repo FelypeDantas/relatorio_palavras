@@ -1,28 +1,52 @@
+
 export function contaPalavras(texto) {
-  const paragrafos = extraiParagrafos(texto)
-  const contagem = paragrafos.flatMap((paragrafo) => {
-    if (!paragrafo) return [];
-    return verificaPalavrasDuplicadas(paragrafo);
-  })
-  return contagem;
+    if (typeof texto !== "string") {
+        throw new TypeError("O texto precisa ser uma string.");
+    }
+
+    const paragrafos = extraiParagrafos(texto);
+
+    return paragrafos.flatMap((paragrafo) => {
+        if (!paragrafo.trim()) return [];
+
+        const resultado = verificaPalavrasDuplicadas(paragrafo);
+
+        return Object.keys(resultado).length > 0
+            ? [resultado]
+            : [];
+    });
 }
 
 function extraiParagrafos(texto) {
-  return texto.toLowerCase().split('\n');
+    return texto.normalize("NFC").split(/\r\n?|\n/);
 }
 
 function limpaPalavras(palavra) {
-  return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+    return palavra
+        .normalize("NFC")
+        .toLocaleLowerCase("pt-BR")
+        .replace(/[^\p{L}\p{M}\p{N}'’]/gu, "");
 }
 
 function verificaPalavrasDuplicadas(texto) {
-  const listaPalavras = texto.split(' ');
-  const resultado = {};
-  listaPalavras.forEach(palavra => {
-    if (palavra.length >= 3) {
-      const palavraLimpa = limpaPalavras(palavra);
-      resultado[palavraLimpa] = (resultado[palavraLimpa] || 0) + 1
-    }
-  })
-  return resultado;
+    const resultado = {};
+
+    const listaPalavras = texto.match(
+        /[\p{L}\p{M}\p{N}]+(?:['’][\p{L}\p{M}\p{N}]+)*/gu
+    ) || [];
+
+    listaPalavras.forEach((palavra) => {
+        const palavraLimpa = limpaPalavras(palavra);
+
+        // Ignora palavras com menos de três caracteres.
+        if ([...palavraLimpa].length < 3) return;
+
+        resultado[palavraLimpa] = (
+            Object.hasOwn(resultado, palavraLimpa)
+                ? resultado[palavraLimpa]
+                : 0
+        ) + 1;
+    });
+
+    return resultado;
 }
