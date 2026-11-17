@@ -1,18 +1,78 @@
+
 import { contaPalavras } from "../index.js";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ erro: "Método não permitido" });
-  }
+    // ======================================
+    // 1. VALIDAR MÉTODO HTTP
+    // ======================================
 
-  const { texto } = req.body;
+    if (req.method !== "POST") {
 
-  if (!texto) {
-    return res.status(400).json({ erro: "Texto não enviado" });
-  }
+        res.setHeader("Allow", ["POST"]);
 
-  const resultado = contaPalavras(texto);
+        return res.status(405).json({
+            erro: "Método não permitido."
+        });
 
-  res.status(200).json(resultado);
+    }
+
+
+    // ======================================
+    // 2. VALIDAR CORPO DA REQUISIÇÃO
+    // ======================================
+
+    if (!req.body || typeof req.body !== "object") {
+
+        return res.status(400).json({
+            erro: "Corpo da requisição inválido."
+        });
+
+    }
+
+
+    // ======================================
+    // 3. VALIDAR TEXTO
+    // ======================================
+
+    const { texto } = req.body;
+
+    if (typeof texto !== "string" || !texto.trim()) {
+
+        return res.status(400).json({
+            erro: "Envie um texto válido para análise."
+        });
+
+    }
+
+
+    // ======================================
+    // 4. PROCESSAR ANÁLISE
+    // ======================================
+
+    try {
+
+        const resultado = await contaPalavras(texto);
+
+        if (!Array.isArray(resultado)) {
+
+            throw new Error(
+                "A função contaPalavras retornou um formato inválido."
+            );
+
+        }
+
+        return res.status(200).json(resultado);
+
+    } catch (erro) {
+
+        // Registra o erro para diagnóstico.
+        console.error("Erro ao analisar texto:", erro);
+
+        return res.status(500).json({
+            erro: "Não foi possível analisar o texto."
+        });
+
+    }
+
 }
