@@ -1,91 +1,424 @@
-body{
-  font-family: Arial, Helvetica, sans-serif;
-  background:#f4f6f8;
-  margin:0;
-  padding:30px;
-  display:flex;
-  justify-content:center;
+
+/* ========================================
+   ANALISADOR DE TEXTO
+   Identidade visual: Carmesim
+======================================== */
+
+:root {
+    --background: #100c10;
+    --surface: #191319;
+    --surface-light: #211921;
+    --surface-hover: #2a202a;
+
+    --primary: #c54c70;
+    --primary-hover: #a93b5e;
+    --primary-light: #e58aa4;
+
+    --text: #f3eaf0;
+    --text-secondary: #ad9eaa;
+    --text-muted: #786b76;
+
+    --border: #382936;
+    --border-focus: #c54c70;
+
+    --highlight: #653044;
+    --highlight-text: #ffe4ec;
+
+    --radius: 12px;
+    --transition: 0.25s ease;
 }
 
-main{
-  width:100%;
-  max-width:900px;
+
+/* ========================================
+   RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1{
-  text-align:center;
-  margin-bottom:30px;
-  color:#333;
+html {
+    scroll-behavior: smooth;
 }
 
-section{
-  background:white;
-  padding:20px;
-  margin-bottom:20px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+body {
+    min-height: 100vh;
+    font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(
+            ellipse at top,
+            rgba(139, 45, 79, 0.12),
+            transparent 55%
+        ),
+        var(--background);
+
+    color: var(--text);
+
+    padding: 45px 20px;
+
+    display: flex;
+    justify-content: center;
 }
 
-h2{
-  margin-top:0;
-  color:#444;
+
+/* ========================================
+   ESTRUTURA PRINCIPAL
+======================================== */
+
+main {
+    width: 100%;
+    max-width: 950px;
+    margin: auto;
 }
 
-textarea{
-  width:100%;
-  height:200px;
-  padding:10px;
-  margin-top:10px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  resize:vertical;
-  font-size:14px;
+h1 {
+    text-align: center;
+    margin-bottom: 35px;
+
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 600;
+
+    letter-spacing: -1px;
+    color: var(--text);
 }
 
-button{
-  margin-top:10px;
-  padding:10px 18px;
-  border:none;
-  border-radius:6px;
-  background:#4a6cf7;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.2s;
+h1 span {
+    color: var(--primary-light);
 }
 
-button:hover{
-  background:#3b55c4;
+h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 23px;
+    font-weight: 600;
+
+    color: var(--text);
 }
 
-input[type="file"]{
-  margin-top:10px;
+h3 {
+    color: var(--text);
 }
 
-#textoDestacado{
-  line-height:1.6;
-  background:#fafafa;
-  padding:15px;
-  border-radius:6px;
-  border:1px solid #eee;
+
+/* ========================================
+   SEÇÕES
+======================================== */
+
+section {
+    background: var(--surface);
+
+    padding: 25px;
+    margin-bottom: 22px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.18);
+
+    transition: border-color var(--transition);
 }
 
-#ranking ol{
-  padding-left:20px;
+section:hover {
+    border-color: #513445;
 }
 
-#ranking li{
-  margin-bottom:5px;
+
+/* ========================================
+   EDITOR DE TEXTO
+======================================== */
+
+textarea {
+    display: block;
+
+    width: 100%;
+    min-height: 220px;
+
+    padding: 16px;
+    margin-top: 12px;
+
+    background: #120e13;
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    outline: none;
+    resize: vertical;
+
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.8;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
 }
 
-canvas{
-  display:block;
-  margin:auto;
+textarea::placeholder {
+    color: var(--text-muted);
 }
 
-.highlight{
-  background:#ffe066;
-  padding:2px 4px;
-  border-radius:4px;
-  font-weight:bold;
+textarea:focus {
+    border-color: var(--border-focus);
+
+    box-shadow:
+        0 0 0 3px rgba(197, 76, 112, 0.12);
+}
+
+
+/* ========================================
+   BOTÕES
+======================================== */
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 12px;
+    padding: 11px 19px;
+
+    border: 1px solid var(--primary);
+    border-radius: 7px;
+
+    background: var(--primary);
+    color: white;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+button:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(197, 76, 112, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+}
+
+
+/* ========================================
+   CARREGAMENTO DE ARQUIVOS
+======================================== */
+
+input[type="file"] {
+    display: block;
+    max-width: 100%;
+
+    margin-top: 12px;
+
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 9px 13px;
+    margin-right: 10px;
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    background: var(--surface-light);
+    color: var(--primary-light);
+
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary);
+}
+
+
+/* ========================================
+   TEXTO ANALISADO
+======================================== */
+
+#textoDestacado {
+    line-height: 1.9;
+
+    background: #120e13;
+
+    padding: 18px;
+
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    color: var(--text-secondary);
+
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.highlight {
+    background: var(--highlight);
+    color: var(--highlight-text);
+
+    padding: 2px 5px;
+
+    border-radius: 4px;
+
+    font-weight: 700;
+}
+
+
+/* ========================================
+   RANKING DE PALAVRAS
+======================================== */
+
+#ranking {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+#ranking ol {
+    padding-left: 25px;
+}
+
+#ranking li {
+    margin-bottom: 10px;
+    padding: 5px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#ranking li::marker {
+    color: var(--primary-light);
+    font-weight: bold;
+}
+
+
+/* ========================================
+   NUVEM DE PALAVRAS
+======================================== */
+
+canvas {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 15px auto;
+
+    border-radius: 8px;
+}
+
+
+/* ========================================
+   SELEÇÃO DE TEXTO
+======================================== */
+
+::selection {
+    background: var(--primary);
+    color: white;
+}
+
+
+/* ========================================
+   BARRA DE ROLAGEM
+======================================== */
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #513445;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 25px 12px;
+    }
+
+    section {
+        padding: 18px;
+    }
+
+    h1 {
+        margin-bottom: 25px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    textarea {
+        min-height: 190px;
+        font-size: 13px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    canvas {
+        width: 100%;
+    }
+
+}
+
+
+/* ========================================
+   ACESSIBILIDADE
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
 }
