@@ -1,60 +1,192 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-    <title>Analisador de Texto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Ferramenta de análise textual para escritores.">
+
+    <title>Analisador de Texto | Ferramenta Literária</title>
+
     <link rel="stylesheet" href="style.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <main>
-        <h1>Analisador de Palavras</h1>
+    <main class="container">
 
-        <section>
+        <header class="cabecalho">
 
-            <h2>Carregar texto</h2>
+            <div class="marca">
+                <span class="marca-icone">✦</span>
+                <span>LABORATÓRIO LITERÁRIO</span>
+            </div>
 
-            <input type="file" id="arquivo">
-            <button onclick="lerArquivo()">Carregar</button>
+            <h1>Analisador de <span>Texto</span></h1>
 
-            <textarea id="texto" placeholder="cole seu texto aqui"></textarea>
+            <p>
+                Explore as palavras, identifique repetições
+                e descubra os padrões presentes na sua escrita.
+            </p>
 
-            <button onclick="analisar()">Analisar</button>
+        </header>
+
+
+        <section class="painel editor">
+
+            <div class="secao-cabecalho">
+                <div>
+                    <span class="etiqueta">01 · ENTRADA</span>
+                    <h2>Seu texto</h2>
+                </div>
+
+                <span class="status">EDITOR</span>
+            </div>
+
+
+            <div class="upload-area">
+
+                <div class="upload-icone">↑</div>
+
+                <div class="upload-conteudo">
+                    <strong>Importe seu documento</strong>
+                    <span>Arquivos de texto no formato .txt</span>
+                </div>
+
+                <input
+                    type="file"
+                    id="arquivo"
+                    accept=".txt,text/plain"
+                >
+
+                <button onclick="lerArquivo()" class="botao-secundario">
+                    Carregar arquivo
+                </button>
+
+            </div>
+
+
+            <div class="editor-cabecalho">
+                <label for="texto">Área de escrita</label>
+                <span id="contadorCaracteres">0 caracteres</span>
+            </div>
+
+            <textarea
+                id="texto"
+                placeholder="Cole ou escreva seu texto aqui..."
+            ></textarea>
+
+
+            <div class="editor-rodape">
+
+                <span id="contadorPalavras">0 palavras</span>
+
+                <div class="acoes">
+                    <button
+                        onclick="limparTexto()"
+                        class="botao-secundario"
+                    >
+                        Limpar
+                    </button>
+
+                    <button
+                        onclick="analisar()"
+                        class="botao-principal"
+                    >
+                        Analisar texto →
+                    </button>
+                </div>
+
+            </div>
 
         </section>
 
-        <section>
 
-            <h2>Texto analisado</h2>
+        <section class="painel resultados">
 
-            <div id="textoDestacado"></div>
+            <div class="secao-cabecalho">
+                <div>
+                    <span class="etiqueta">02 · INVESTIGAÇÃO</span>
+                    <h2>Resultados da análise</h2>
+                </div>
+            </div>
+
+
+            <div class="resultado-card">
+
+                <h3>Texto analisado</h3>
+
+                <p class="descricao">
+                    Visualize as palavras identificadas e suas ocorrências.
+                </p>
+
+                <div id="textoDestacado" class="texto-destacado">
+                    <span class="mensagem-vazia">
+                        Seu texto analisado aparecerá aqui.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="resultado-card">
+
+                <h3>Ranking de palavras</h3>
+
+                <p class="descricao">
+                    Descubra quais palavras aparecem com maior frequência.
+                </p>
+
+                <div id="ranking">
+
+                    <span class="mensagem-vazia">
+                        O ranking será apresentado após a análise.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="resultado-card">
+
+                <h3>Nuvem de palavras</h3>
+
+                <p class="descricao">
+                    Uma representação visual da frequência das palavras.
+                </p>
+
+                <div class="nuvem-container">
+
+                    <canvas id="nuvem" width="700" height="400"></canvas>
+
+                </div>
+
+            </div>
 
         </section>
 
-        <section>
 
-            <h2>Ranking de palavras</h2>
+        <footer class="rodape">
 
-            <div id="ranking"></div>
+            <span>LABORATÓRIO LITERÁRIO</span>
+            <span>Uma ferramenta para compreender sua escrita.</span>
 
-        </section>
+        </footer>
 
-        <section>
-
-            <h2>Nuvem de palavras</h2>
-
-            <canvas id="nuvem" width="500" height="300"></canvas>
-
-        </section>
     </main>
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.1.1/wordcloud2.min.js"></script>
+
     <script src="script.js"></script>
 
 </body>
-
 </html>
